@@ -1,0 +1,17 @@
+# Git LFS Configuration
+# Track large model files with Git LFS
+
+# Keras/TensorFlow models
+*.h5
+*.hdf5
+
+# PyTorch models
+*.pt
+*.pth
+
+# ONNX models
+*.onnx
+
+# Other large files
+*.pkl
+*.pickle
