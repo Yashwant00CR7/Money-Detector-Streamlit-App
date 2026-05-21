@@ -1,105 +1,79 @@
 # Currency Detection App
 
-A Streamlit-based web application for detecting and classifying Indian currency notes using deep learning models.
+A Streamlit web app for detecting and classifying Indian currency notes using YOLOv8 + DenseNet121 deep learning models.
 
-## Features
+**[Try it live →](https://indian-currency-detector.streamlit.app/)**
 
-- **YOLO Object Detection**: Detects currency notes in uploaded images
-- **CNN Classification**: Classifies detected currency into denominations (10, 20, 50, 100, 200, 500 Rupees)
-- **Custom Attention Mechanism**: Uses CentralFocusSpatialAttention for improved accuracy
-- **Interactive Web Interface**: Built with Streamlit for easy image upload and real-time predictions
+---
 
-## Model Architecture
+## 🎯 What it does
 
-- **Object Detection**: YOLOv8 for currency note detection
-- **Classification**: DenseNet121 backbone with custom CentralFocusSpatialAttention layer
-- **Input Size**: 224x224 RGB images
-- **Output Classes**: 6 Indian currency denominations
+Upload a photo of an Indian currency note and the app:
+1. Detects the note using YOLOv8 object detection
+2. Classifies the denomination using a DenseNet121 CNN with custom attention
+3. Returns the result instantly in the browser
 
-## Installation
+Supports: ₹10, ₹20, ₹50, ₹100, ₹200, ₹500
+
+---
+
+## 🧠 Model Architecture
+
+- **Detection**: YOLOv8 — trained on 1,000+ custom images, 93.5% mAP@0.5
+- **Classification**: DenseNet121 + `CentralFocusSpatialAttention` — custom Gaussian-weighted attention layer
+- **Input**: 224×224 RGB images
+- **Dataset**: [Indian Currency Dataset on Kaggle](https://www.kaggle.com/datasets/yashwantk23cse/indian-currency)
+
+---
+
+## 🚀 Setup
 
 ### Prerequisites
 - Python 3.10+
 - Conda (recommended)
 
-### Setup
+```bash
+git clone https://github.com/Yashwant00CR7/Money-Detector-Streamlit-App.git
+cd Money-Detector-Streamlit-App
 
-1. **Clone the repository**
-   ```bash
-   git clone <your-repo-url>
-   cd Streamlit_CurrencyDetector
-   ```
+conda create -n currency_detector python=3.10
+conda activate currency_detector
 
-2. **Create conda environment**
-   ```bash
-   conda create -n currency_detector python=3.10
-   conda activate currency_detector
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-## Usage
-
-1. **Run the Streamlit app**
-   ```bash
-   streamlit run app.py
-   ```
-
-2. **Open your browser** to `http://localhost:8501`
-
-3. **Upload an image** of Indian currency and get instant predictions
-
-## Project Structure
-
-```
-Streamlit_CurrencyDetector/
-├── app.py                          # Main Streamlit application
-├── requirements.txt                # Python dependencies
-├── Currency_Detection_model_...h5  # Pre-trained CNN model
-├── runs/detect/train4/weights/     # YOLO model weights
-│   └── best.pt
-└── README.md                       # This file
+pip install -r requirements.txt
+streamlit run app.py
 ```
 
-## Requirements
+Open `http://localhost:8501`.
 
-Key dependencies (see `requirements.txt` for full list):
-- `streamlit==1.44.1`
-- `tensorflow==2.17.0`
-- `keras==3.7.0`
-- `ultralytics==8.3.108`
-- `numpy==1.26.4`
-- `Pillow==11.2.1`
+---
 
-**Note**: Keras 3.7.0 is specifically required for compatibility with the saved model.
+## 📁 Project Structure
 
-## Technical Details
+```
+├── app.py                          # Streamlit app
+├── requirements.txt
+├── Currency_Detection_model_...h5  # CNN model weights
+└── runs/detect/train4/weights/
+    └── best.pt                     # YOLO weights
+```
 
-### Custom Layers
-- **RobustConv2D**: Enhanced Conv2D layer with shape handling for Keras 3 compatibility
-- **CentralFocusSpatialAttention**: Custom attention mechanism focusing on central regions with Gaussian weighting
+---
 
-### Model Loading
-- Uses `compile=False` for inference-only loading
-- Custom object scope for deserializing custom layers
+## ⚠️ Compatibility Notes
 
-## Troubleshooting
+- Requires **Keras 3.7.0** exactly — newer versions break the saved model format
+- If you hit shape errors, run `streamlit cache clear` and retry
+- Ensure `runs/detect/train4/weights/best.pt` exists before running
 
-### Common Issues
+---
 
-1. **Shape-related errors**: Ensure you're using Keras 3.7.0 (not 3.12.0+)
-2. **Model loading errors**: Clear Streamlit cache with `streamlit cache clear`
-3. **YOLO errors**: Verify `runs/detect/train4/weights/best.pt` exists
+## 🔗 Related
 
-## License
+- Full system with audio feedback: [CurrencyDetector](https://github.com/Yashwant00CR7/CurrencyDetector)
+- Kaggle dataset: [Indian Currency](https://www.kaggle.com/datasets/yashwantk23cse/indian-currency)
 
-[Add your license here]
+---
 
-## Acknowledgments
+## 📝 License
 
-- DenseNet121 architecture from Keras Applications
-- YOLOv8 from Ultralytics
-- Streamlit for the web framework
+MIT License
